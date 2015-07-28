@@ -1,0 +1,169 @@
+<div>
+<div class="page-header">
+    <h1>RTB Prediction Adjustment - Scenarios</h1>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <select id="comboFactor">
+            <option value="0">Select Factor</option>
+            <option value="10">10%</option>
+            <option value="20">20%</option>
+            <option value="30">30%</option>
+        </select>
+        <ul id="series" style="list-style: none"></ul>
+        <input type="button" value="GetJson" id="btnGetJson" />
+        <!--Divs that will hold each control and chart-->
+        <div id="colFilter_div"></div>
+        <div id="chart_div" style="width: 1000px; height: 500px;"></div>
+        
+    </div>
+  <div class="row-fluid">
+    <div class="span12">
+      <div id="chart1"></div>
+      <!--Sidebar content-->
+    </div>
+  </div>
+</div>
+    <div ng-repeat="scenario in scenarios">
+      <span style="font-size:20px; margin-left:10px;">
+        <a href="#/scenario/{{scenario._id}}" ng-click="showme=true">{{scenario.name}}</a>
+        <span></span>
+        <!--<a ng-click=setScenario({{scenario._id}})>{{scenario.name}}</a>-->
+       </span>
+    </div>
+
+    <button ng-click=createNewScenario() class="btn btn-primary">Create New Scenario</button>
+      <form ng-show="showme"  ng-show="isLoggedIn()" style="margin-top:30px;">
+<div ng-hide="isLoggedIn()">
+  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a scenario.</h3>
+</div>
+    <h3>Scenario</h3>
+    <div class="container">
+     <form class="form-horizontal" role="form">
+     <div class = "row">
+      <div class="col-md-3">
+        <div class="form-group"<>
+          <input type="text"
+            class="form-control"
+            placeholder="Senario Name"
+            ng-model="scenario.name"></input>
+        </div>
+      </div> 
+      <div class="col-md-9">
+        <div class="form-group"<>
+          <textarea
+            class="form-control"
+            rows="1"
+            placeholder="Senario Description"
+            ng-model="scenario.description"></textarea>
+        </div>
+      </div> 
+
+      <div class="col-md-3" text-align:left>
+        <div class="form-group">
+          <strong>Services</strong>
+            <div ng-init="selectedservices = selectedservices || {}"></div>
+          <div ng-repeat="service in services">
+            <div class="checkbox">
+              <label><input type="checkbox"
+                            ng-model="selectedservices[service.serviceid]"
+                            ng-checked="selectedservices[service.serviceid]"
+                            value="selectedservices[service.serviceid]">
+                            {{service.servicename}}</label>
+           </div>
+          </div>
+          <!--<input type="text"
+            class="form-control"
+            placeholder="Services List to be displayed as checkboxes"
+            ng-model="scenario.services"></input>-->
+        </div>
+      </div>
+      <div class="col-md-2">
+            <div class="form-group"<>
+             <select ng-model="Parameter" class="form-control" style="width: 100%;">
+                <option ng-repeat="param in parameters" value="{{param.name}}">{{param.name}}</option>
+             </select>
+              <!--<input type="text"
+                class="form-control"
+                placeholder="Name"
+                ng-model="pname"></input>-->
+            </div>
+          </div> 
+          <div class="col-md-2">
+            <div class="form-group"<>
+              <input type="text"
+                class="form-control"
+                placeholder="Value"
+                ng-model="pvalue"></input>
+            </div>
+          </div> 
+          <div class="col-md-2">
+            <div class="form-group">
+            <div class="form-group" ng-init="selectedquarters= selectedquarters || {}"></div>
+            <some ng-repeat="quarter in quarters">
+
+              <input type="checkbox" class="form-group"
+                     ng-model="selectedquarters[quarter]" 
+                     ng-checked="selectedquarters[quarter]" 
+                     value="selectedquarters[quarter]"> 
+                    {{quarter}} </some>
+            </div>
+          </div> 
+          <div class="col-md-2">
+            <div class="form-group"<>
+              <textarea
+                class="form-control"
+                rows="1"
+                placeholder="Comment"
+                ng-model="pcomment"></textarea>
+            </div>
+          </div> 
+         <div class="col-md-1" style="text-align:right">
+            <div class="form-group">
+              <button ng-click=addParameter() class="btn btn-primary">Add</button>
+            </div>
+          </div> 
+ 
+      <!--<div class="col-md-3" text-align:left>
+        <div class="form-group">
+          <strong>Services</strong>
+            <div ng-init="selectedservices = selectedservices || {}"></div>
+          <div ng-repeat="service in services">
+            <div class="checkbox">
+              <label><input type="checkbox"
+                            ng-model="selectedservices[service.serviceid]"
+                            ng-checked="selectedservices[service.serviceid]"
+                            value="selectedservices[service.serviceid]">
+                            {{service.servicename}}</label>
+           </div>
+          </div>
+        </div>
+      </div>-->
+ 
+    <div class="col-md-9">
+      <table class="table table-bordered" >
+          <tr>
+            <th> Parameter </th>
+            <th> Value </th>
+            <th> Quarters </th>
+            <th> Comment </th>
+          </tr>
+          <tr ng-repeat="parameter in scenario.parameters">
+            <td> {{parameter.name}}</td>
+            <td> {{parameter.value}}</td>
+            <td> {{parameter.applytoquarters}}</td>
+            <td> {{parameter.comment}}</td>
+          </tr>
+      </table>
+    </div>
+    <div class="col-md-12" style="text-align:center">
+      <div class="centered">
+        <button ng-click=addScenario() class="btn btn-primary"> Save Scenario </button>
+        <!--<button type="submit" class="btn btn-primary">Save Scenario</button>  -->
+      <div>
+    </div>
+      </div>
+  </div>
+  
+</form>
+</div>
